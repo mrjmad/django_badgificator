@@ -10,6 +10,7 @@ IS_TEST_DB = settings.DATABASES.get(
 IS_MEMORY = settings.DATABASES.get(
     'default', {}).get('NAME', '').startswith(':memory:')
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

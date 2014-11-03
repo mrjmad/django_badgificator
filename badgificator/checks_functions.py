@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 import logging
 
 from django.contrib.contenttypes.models import ContentType
-from django.utils import timezone, timezone
+from django.utils import timezone
 
-from models import Badge, UserBadge, NUMBER_RELATED_MODEL
+from .models import Badge, UserBadge, NUMBER_RELATED_MODEL
 
 
 def post_save_check_all(sender, instance):

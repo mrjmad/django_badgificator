@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 
 try:
     from unittest import mock
@@ -28,7 +30,7 @@ class DecoratorDataLoginTest(TestCase):
         view = mock.MagicMock(return_value='dummy response')
         self.assertEqual(0, DataPresence.objects.count())
         decorated = bdg_data_presence(view)
-        response = decorated(request)
+        decorated(request)
         view.assert_called_once_with(request)
         self.assertEqual(1, DataPresence.objects.count())
         data = DataPresence.objects.all()[0]
@@ -42,8 +44,8 @@ class DecoratorDataLoginTest(TestCase):
         request.user = self.user
         view = mock.MagicMock(return_value='dummy response')
         decorated = bdg_data_presence(view)
-        response = decorated(request)
-        response = decorated(request)
+        decorated(request)
+        decorated(request)
         data = DataPresence.objects.all()[0]
         self.assertEqual(self.user, data.user)
         self.assertEqual(timezone.now().date(), data.last_login)
@@ -61,7 +63,7 @@ class DecoratorDataLoginTest(TestCase):
         request.user = self.user
         view = mock.MagicMock(return_value='dummy response')
         decorated = bdg_data_presence(view)
-        response = decorated(request)
+        decorated(request)
         data = DataPresence.objects.all()[0]
         self.assertEqual(self.user, data.user)
         self.assertEqual(timezone.now().date(), data.last_login)
@@ -79,11 +81,9 @@ class DecoratorDataLoginTest(TestCase):
         request.user = self.user
         view = mock.MagicMock(return_value='dummy response')
         decorated = bdg_data_presence(view)
-        response = decorated(request)
+        decorated(request)
         data = DataPresence.objects.all()[0]
         self.assertEqual(self.user, data.user)
         self.assertEqual(timezone.now().date(), data.last_login)
         self.assertEqual(1, data.consecutive_days)
         self.assertEqual(2, data.number_days)
-
-

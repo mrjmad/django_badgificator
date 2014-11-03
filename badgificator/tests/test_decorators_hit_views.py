@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 try:
     from unittest import mock
@@ -30,7 +31,7 @@ class DecoratorHitViewTest(TestCase):
         self.assertEqual(0, HitViewByUser.objects.count())
         decorator = calculate_hit_by_user(view_name)
         decorated = decorator(view)
-        response = decorated(request)
+        decorated(request)
         view.assert_called_once_with(request)
         self.assertEqual(1, HitViewByUser.objects.count())
         data = HitViewByUser.objects.all()[0]
@@ -46,8 +47,8 @@ class DecoratorHitViewTest(TestCase):
         view = mock.MagicMock(return_value='dummy response')
         decorator = calculate_hit_by_user(view_name)
         decorated = decorator(view)
-        response = decorated(request)
-        response = decorated(request)
+        decorated(request)
+        decorated(request)
         data = HitViewByUser.objects.all()[0]
         self.assertEqual(self.user, data.user)
         self.assertEqual(timezone.now().date(), data.date_last_hit)
@@ -67,7 +68,7 @@ class DecoratorHitViewTest(TestCase):
         view = mock.MagicMock(return_value='dummy response')
         decorator = calculate_hit_by_user(view_name)
         decorated = decorator(view)
-        response = decorated(request)
+        decorated(request)
         data = HitViewByUser.objects.all()[0]
 
         self.assertEqual(self.user, data.user)
@@ -76,7 +77,6 @@ class DecoratorHitViewTest(TestCase):
         self.assertEqual(view_name, data.view_name)
 
     def test_hit_view02(self):
-        today = timezone.now().date()
         view_name1 = 'dummyview1'
         view_name2 = 'dummyview2'
         request1 = self.factory.get('/dummyview1')
@@ -90,12 +90,12 @@ class DecoratorHitViewTest(TestCase):
 
         decorator1 = calculate_hit_by_user(view_name1)
         decorated1 = decorator1(view1)
-        response = decorated1(request1)
+        decorated1(request1)
         view1.assert_called_once_with(request1)
 
         decorator2 = calculate_hit_by_user(view_name2)
         decorated2 = decorator2(view2)
-        response = decorated2(request2)
+        decorated2(request2)
         view2.assert_called_once_with(request2)
 
         self.assertEqual(2, HitViewByUser.objects.count())
@@ -105,5 +105,3 @@ class DecoratorHitViewTest(TestCase):
 
         self.assertEqual(1, data1.hits)
         self.assertEqual(1, data2.hits)
-
-

@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
-
-try:
-    from unittest import mock
-except ImportError:
-    import mock
-
+from __future__ import unicode_literals
 
 from django.utils import timezone
 from django.test import TestCase
@@ -12,7 +7,7 @@ from django.contrib.auth import get_user_model
 
 from ..models import Badge, UserBadge, DataPresence, HitViewByUser
 
-from utils_for_tests import (utils_create_view_hit_by_user,
+from .utils_for_tests import (utils_create_view_hit_by_user,
                              utils_create_data_presence, utils_create_two_badges)
 
 
