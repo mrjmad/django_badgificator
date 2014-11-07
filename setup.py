@@ -1,5 +1,7 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
+
+EXCLUDE_FROM_PACKAGES = []
 
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
@@ -9,9 +11,9 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django_badgificator',
+    name='django-badgificator',
     version='0.0.1',
-    packages=['badgificator'],
+    packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,
     license='MIT License',
     description='A simple App for Badges',
