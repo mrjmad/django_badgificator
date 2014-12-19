@@ -25,7 +25,7 @@ CONDITIONS = (
 @python_2_unicode_compatible
 class Badge(models.Model):
     name = models.CharField(_("Badge's Name"), max_length=150)
-    content_type = models.ForeignKey(ContentType, verbose_name=_("Content Type"))
+    content_type = models.ForeignKey(ContentType, verbose_name=_("Content Type"), blank=True, null=True)
     condition = models.CharField(_("Badge's Condition displayed"), max_length=350, blank=True, null=True)
     # if assignment is manual, conditions were not check by automatic mechanism of the app
     manual_assignment = models.BooleanField(_("Manuel Assignment ?"), default=False)
@@ -35,8 +35,9 @@ class Badge(models.Model):
                                                blank=True, null=True)
 
     simple_condition = models.CharField(_("Simple condition for the badge"), blank=True,
-                                     choices=CONDITIONS, max_length=10)
-    name_field = models.CharField(_("Name of Field for check for simple condition"), blank=True, max_length=100)
+                                        choices=CONDITIONS, max_length=10)
+    name_for_check = models.CharField(_("Name of Field or View for check for simple condition"), blank=True,
+                                      max_length=100)
     value_for_valid = models.PositiveIntegerField(_("Value validating the simple condition "), blank=True,
                                                   null=True)
 
