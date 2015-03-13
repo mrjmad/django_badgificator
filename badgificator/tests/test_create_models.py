@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from ..models import Badge, UserBadge, DataPresence, HitViewByUser
 
 from .utils_for_tests import (utils_create_view_hit_by_user,
-                             utils_create_data_presence, utils_create_five_badges)
+                             utils_create_data_presence, utils_create_six_badges)
 
 
 class CreateModelTest(TestCase):
@@ -17,12 +17,12 @@ class CreateModelTest(TestCase):
         self.user = get_user_model().objects.create(username='user2')
 
     def test_create_badge_01(self):
-        utils_create_five_badges(self)
+        utils_create_six_badges(self)
         self.assertIsInstance(self.badge2, Badge)
-        self.assertEqual(5, Badge.objects.all().count())
+        self.assertEqual(self.BADGES_NUMBER, Badge.objects.all().count())
 
     def test_create_badge_02(self):
-        utils_create_five_badges(self)
+        utils_create_six_badges(self)
 
         UserBadge.objects.create(user=self.user, badge=self.badge2, date=timezone.now())
         UserBadge.objects.create(user=self.user, badge=self.badge1, date=timezone.now())

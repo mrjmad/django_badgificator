@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from __future__ import (print_function, division, absolute_import, unicode_literals)
 
 from django.utils import timezone
 
@@ -7,7 +7,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 from ..models import UserBadge, DataPresence, HitViewByUser
-from .utils_for_tests import DummyModelForTest, utils_create_five_badges
+from .utils_for_tests import DummyModelForTest, utils_create_six_badges
 
 
 class BadgeSimpleConditionTest1(TestCase):
@@ -20,7 +20,7 @@ class BadgeSimpleConditionTest1(TestCase):
         self.assertEqual(1, DummyModelForTest.objects.count())
 
     def test_simple_condition_greater_than(self):
-        utils_create_five_badges(self)
+        utils_create_six_badges(self)
         self.assertEqual(0, UserBadge.objects.all().count())
         dummy2 = DummyModelForTest(name="Dummy 2", user=self.user)
         dummy2.save()
@@ -38,7 +38,7 @@ class BadgeDataPresenceTest1(TestCase):
         self.user = get_user_model().objects.create(username='user1')
 
     def test_greater_than_number_days(self):
-        utils_create_five_badges(self)
+        utils_create_six_badges(self)
         self.assertEqual(0, UserBadge.objects.all().count())
         today = timezone.now().date()
         data_presence = DataPresence(user=self.user, last_login=today,
@@ -52,7 +52,7 @@ class BadgeDataPresenceTest1(TestCase):
         self.assertEqual(self.badge3, UserBadge.objects.all()[0].badge)
 
     def test_greater_than_consecutive_days(self):
-        utils_create_five_badges(self)
+        utils_create_six_badges(self)
         self.assertEqual(0, UserBadge.objects.all().count())
         today = timezone.now().date()
         data_presence = DataPresence(user=self.user, last_login=today,
@@ -71,7 +71,7 @@ class BadgeHitViewByUserTest1(TestCase):
         self.user = get_user_model().objects.create(username='user1')
 
     def test_greater_than_hits_number01(self):
-        utils_create_five_badges(self)
+        utils_create_six_badges(self)
         self.assertEqual(0, UserBadge.objects.all().count())
         today = timezone.now().date()
         hit_view_by_user = HitViewByUser(user=self.user, date_last_hit=today,
@@ -85,7 +85,7 @@ class BadgeHitViewByUserTest1(TestCase):
         self.assertEqual(self.badge5, UserBadge.objects.all()[0].badge)
 
     def test_greater_than_hits_number02(self):
-        utils_create_five_badges(self)
+        utils_create_six_badges(self)
         self.assertEqual(0, UserBadge.objects.all().count())
         today = timezone.now().date()
         hit_view_by_user = HitViewByUser(user=self.user, date_last_hit=today,

@@ -10,7 +10,7 @@ def post_save_callback_for_badge(sender, instance, created, raw,
                                  using, update_fields, **kwargs):
 
     from .models import DataPresence, HitViewByUser, Badge, UserBadge
-    from .checks_functions import post_save_check_all, post_save_check_data_presence, post_save_check_hit_view
+    from .checks_functions import post_save_check_badge_related_model, post_save_check_data_presence, post_save_check_hit_view
     if sender == Badge or sender == UserBadge:
         return
     if sender == DataPresence:
@@ -18,7 +18,7 @@ def post_save_callback_for_badge(sender, instance, created, raw,
     if sender == HitViewByUser:
         post_save_check_hit_view(sender, instance)
 
-    post_save_check_all(sender, instance)
+    post_save_check_badge_related_model(sender, instance)
 
 
 def post_migrate_badge_app(sender, **kwargs):
