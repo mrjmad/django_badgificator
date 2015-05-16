@@ -6,4 +6,7 @@ script:
 env:
     - TOXENV=py34-1.7
     - TOXENV=py27-1.7
+    - TOXENV=py27-1.8
+    - TOXENV=py34-1.8
 after_success: coveralls
+

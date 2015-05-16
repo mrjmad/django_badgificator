@@ -10,6 +10,9 @@ IS_TEST_DB = settings.DATABASES.get(
 IS_MEMORY = settings.DATABASES.get(
     'default', {}).get('NAME', '').startswith(':memory:')
 
+IS_MEMORYPY34 = settings.DATABASES.get(
+    'default', {}).get('NAME', '').startswith('file:memorydb_default')
+
 
 class Migration(migrations.Migration):
 
@@ -80,7 +83,7 @@ class Migration(migrations.Migration):
         ),
     ]
 
-    if IS_TEST_DB or IS_MEMORY:
+    if IS_TEST_DB or IS_MEMORY or IS_MEMORYPY34:
         operations.extend([
             migrations.CreateModel(
                 name='DummyModelForTest',
