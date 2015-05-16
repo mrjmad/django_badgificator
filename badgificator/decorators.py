@@ -5,6 +5,7 @@ from datetime import timedelta
 from .models import DataPresence, HitViewByUser
 from django.utils import timezone
 from django.utils.decorators import available_attrs
+from django.db.models import F
 
 
 def bdg_data_presence(view_func):
@@ -15,9 +16,9 @@ def bdg_data_presence(view_func):
             today = timezone.now().date()
             yesterday = today - timedelta(days=1)
             if data_presence.last_login != today:
-                data_presence.number_days += 1
+                data_presence.number_days = F('number_days') + 1
                 if data_presence.last_login == yesterday:
-                    data_presence.consecutive_days += 1
+                    data_presence.consecutive_days = F('consecutive_days') + 1
                 else:
                     data_presence.consecutive_days = 1
                 data_presence.last_login = today
@@ -35,7 +36,7 @@ def calculate_hit_by_user(view_name):
                                                                          view_name=view_name)
                 today = timezone.now().date()
                 if data_view.date_last_hit != today:
-                    data_view.hits += 1
+                    data_view.hits = F('hits') + 1
                     data_view.date_last_hit = today
                     data_view.save()
             return view_func(request, *args, **kwargs)
